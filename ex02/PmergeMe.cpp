@@ -81,57 +81,6 @@ size_t	PmergeMe<T>::count_words(std::string str)
 	return count;
 }
 
-// template <typename T>
-// int PmergeMe<T>::Jacobsthal(int k){
-//     return round((pow(2, k + 1) + pow(-1, k)) / 3);
-// }
-
-
-// template <typename T>
-// void PmergeMe<T>::insert(T &main, T &pend, valuetype odd, T &left, T &vec, bool is_odd, int order) {
-// 	iterator end;
-// 	if (pend.size() == 1) {
-// 		end = std::upper_bound(main.begin(), main.end(), *pend.begin());
-// 		main.insert(end, *pend.begin());
-// 	} else if (pend.size() > 1) {
-// 		size_t jc = 3;
-// 		size_t count = 0;
-// 		size_t idx;
-// 		size_t decrease;
-// 		while (!pend.empty()) {
-// 			idx = Jacobsthal(jc) - Jacobsthal(jc - 1);
-// 			if (idx > pend.size())
-// 				idx = pend.size();
-// 			decrease = 0;
-// 			while (idx) {
-// 				end = main.begin();
-// 				if (Jacobsthal(jc + count) - decrease <= main.size())
-// 					end = main.begin() + Jacobsthal(jc + count) - decrease;
-// 				else
-// 					end = main.end();
-// 				end = std::upper_bound(main.begin(), end, *(pend.begin() + idx - 1));
-// 				main.insert(end, *(pend.begin() + idx - 1));
-// 				pend.erase(pend.begin() + idx - 1);
-// 				idx--;
-// 				decrease++;
-// 				count++;
-// 			}
-// 			jc++;
-// 		}
-// 	}
-// 	T yaslam;
-// 	if (is_odd) {
-// 		end = std::upper_bound(main.begin(), main.end(), odd);
-// 		main.insert(end, odd);
-// 	}
-// 	for (iterator i = main.begin(); i != main.end(); i++) {
-// 		iterator it = std::find(vec.begin(), vec.end(), *i);
-// 		yaslam.insert(yaslam.end(), it - (order - 1), it + 1);
-// 	}
-// 	yaslam.insert(yaslam.end(), left.begin(), left.end());
-// 	vec = yaslam;
-// }
-
 template <typename T>
 void	PmergeMe<T>::sort()
 {
@@ -139,55 +88,6 @@ void	PmergeMe<T>::sort()
 
 	Merge_Insertion_sort(_container);
 }
-
-// template <typename T>
-// void	PmergeMe<T>::sort(T &vec)
-// {
-// 	static int order = 1;
-// 	if(order == 1)
-// 		_start = clock();
-// 	int unit_size = vec.size() / order;
-// 	if (unit_size < 2) return;
-
-// 	bool is_odd = unit_size % 2 == 1;
-// 	iterator start = vec.begin();
-// 	iterator end = vec.begin() + ((order * unit_size) - (is_odd * order));
-
-// 	for (iterator it = start; it < end; it += (order * 2)) {
-// 		if (*(it + (order - 1)) > *(it + ((order * 2) - 1))) {
-// 			for (int i = 0; i < order; i++) {
-// 				std::swap(*(it + i), *(it + i + order));
-// 			}
-// 		}
-// 	}
-
-// 	order *= 2;
-// 	sort(vec);
-// 	order /= 2;
-
-// 	T main;
-// 	T pend;
-// 	valuetype odd = 0;
-// 	T left;
-
-// 	main.push_back(*(start + order - 1));
-// 	main.push_back(*(start + order * 2 - 1));
-
-// 	for (iterator it = start + order * 2; it < end; it += order) {
-// 		pend.push_back(*(it + order - 1));
-// 		it += order;
-// 		main.push_back(*(it + order - 1));
-// 	}
-
-// 	if (is_odd) odd = *(end + order - 1);
-
-// 	left.insert(left.end(), end + (order * is_odd), vec.end());
-
-// 	if (is_odd || !pend.empty())
-// 		insert(main, pend, odd, left, vec, is_odd, order);
-// 	if(order == 1)
-// 		_end = clock();
-// }
 
 template <typename T>
 std::string	PmergeMe<T>::container_type()
@@ -274,3 +174,105 @@ void	PmergeMe<T>::Merge_Insertion_sort(T &vec)
 }
 
 #endif
+
+
+// template <typename T>
+// void	PmergeMe<T>::sort(T &vec)
+// {
+// 	static int order = 1;
+// 	if(order == 1)
+// 		_start = clock();
+// 	int unit_size = vec.size() / order;
+// 	if (unit_size < 2) return;
+
+// 	bool is_odd = unit_size % 2 == 1;
+// 	iterator start = vec.begin();
+// 	iterator end = vec.begin() + ((order * unit_size) - (is_odd * order));
+
+// 	for (iterator it = start; it < end; it += (order * 2)) {
+// 		if (*(it + (order - 1)) > *(it + ((order * 2) - 1))) {
+// 			for (int i = 0; i < order; i++) {
+// 				std::swap(*(it + i), *(it + i + order));
+// 			}
+// 		}
+// 	}
+
+// 	order *= 2;
+// 	sort(vec);
+// 	order /= 2;
+
+// 	T main;
+// 	T pend;
+// 	valuetype odd = 0;
+// 	T left;
+
+// 	main.push_back(*(start + order - 1));
+// 	main.push_back(*(start + order * 2 - 1));
+
+// 	for (iterator it = start + order * 2; it < end; it += order) {
+// 		pend.push_back(*(it + order - 1));
+// 		it += order;
+// 		main.push_back(*(it + order - 1));
+// 	}
+
+// 	if (is_odd) odd = *(end + order - 1);
+
+// 	left.insert(left.end(), end + (order * is_odd), vec.end());
+
+// 	if (is_odd || !pend.empty())
+// 		insert(main, pend, odd, left, vec, is_odd, order);
+// 	if(order == 1)
+// 		_end = clock();
+// }
+
+
+// template <typename T>
+// int PmergeMe<T>::Jacobsthal(int k){
+//     return round((pow(2, k + 1) + pow(-1, k)) / 3);
+// }
+
+
+// template <typename T>
+// void PmergeMe<T>::insert(T &main, T &pend, valuetype odd, T &left, T &vec, bool is_odd, int order) {
+// 	iterator end;
+// 	if (pend.size() == 1) {
+// 		end = std::upper_bound(main.begin(), main.end(), *pend.begin());
+// 		main.insert(end, *pend.begin());
+// 	} else if (pend.size() > 1) {
+// 		size_t jc = 3;
+// 		size_t count = 0;
+// 		size_t idx;
+// 		size_t decrease;
+// 		while (!pend.empty()) {
+// 			idx = Jacobsthal(jc) - Jacobsthal(jc - 1);
+// 			if (idx > pend.size())
+// 				idx = pend.size();
+// 			decrease = 0;
+// 			while (idx) {
+// 				end = main.begin();
+// 				if (Jacobsthal(jc + count) - decrease <= main.size())
+// 					end = main.begin() + Jacobsthal(jc + count) - decrease;
+// 				else
+// 					end = main.end();
+// 				end = std::upper_bound(main.begin(), end, *(pend.begin() + idx - 1));
+// 				main.insert(end, *(pend.begin() + idx - 1));
+// 				pend.erase(pend.begin() + idx - 1);
+// 				idx--;
+// 				decrease++;
+// 				count++;
+// 			}
+// 			jc++;
+// 		}
+// 	}
+// 	T yaslam;
+// 	if (is_odd) {
+// 		end = std::upper_bound(main.begin(), main.end(), odd);
+// 		main.insert(end, odd);
+// 	}
+// 	for (iterator i = main.begin(); i != main.end(); i++) {
+// 		iterator it = std::find(vec.begin(), vec.end(), *i);
+// 		yaslam.insert(yaslam.end(), it - (order - 1), it + 1);
+// 	}
+// 	yaslam.insert(yaslam.end(), left.begin(), left.end());
+// 	vec = yaslam;
+// }

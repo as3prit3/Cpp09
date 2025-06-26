@@ -17,8 +17,6 @@ void get_data_file(std::map<std::string, double> &btcprices)
 		btcprices[date] = price;
 	}
 	dbfile.close();
-	// for (std::map<std::string, double>::iterator i = btcprices.begin(); i != btcprices.end(); ++i)
-	// 	std::cout << std::fixed << std::setprecision(2) << i->first << "," << i->second << std::endl;
 }
 
 int main (int ac, char **av)

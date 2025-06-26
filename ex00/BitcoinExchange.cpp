@@ -3,7 +3,7 @@
 bool	is_valide_price(double price)
 {
 	if (price > 1000)
-		return (std::cout << "Error: too large a number." << std::endl, false);
+		return (std::cout << "Error: too large number." << std::endl, false);
 	else if (price < 0)
 		return (std::cout << "Error: not a positive number." << std::endl, false);
 	return (true);
@@ -62,9 +62,14 @@ void	get_input_file(std::map<std::string, double> &btcprices, char *filename)
 		std::string	date;
 		double		price;
 		char 		pipe;
+		std::string	leftover;
 		std::istringstream iss(line);
 
-		iss >> date >> pipe >> price;
+		if (!(iss >> date >> pipe >> price) || iss >> leftover)
+		{
+			std::cout << "Error: bad input => " << line << std::endl;
+			continue;
+		}
 		if (!is_valide_date(date))
 		{
 			std::cout << "Error: bad input => " << date << std::endl;
@@ -77,4 +82,5 @@ void	get_input_file(std::map<std::string, double> &btcprices, char *filename)
 		else
 			find_closest_date(btcprices, date, price);
 	}
+	infile.close();
 }
