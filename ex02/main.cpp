@@ -9,19 +9,18 @@ int main(int ac, char **av)
 	}
 	try
 	{
-		PmergeMe<std::vector<int> > v(av);
-		PmergeMe<std::deque<int> > d(av);
+		PmergeMe container(av);
 
 		std::cout << "Befor: ";
-		std::cout << d << std::endl;
+		std::cout << container << std::endl;
 
 		std::cout << "After: ";
-		v.sort();
-		d.sort();
-		std::cout << d << std::endl;
+		container.sort_vector();
+		std::cout << container << std::endl;
+		container.sort_time("std::vector");
 
-		v.sort_time();
-		d.sort_time();
+		container.sort_deque();
+		container.sort_time("std::deque");
 	}
 	catch (std::exception &e)
 	{
